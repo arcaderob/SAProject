@@ -1,0 +1,17 @@
+<div class="buySellContainer">
+    <div>
+        <label for="symbol">Symbol:&nbsp;</label>
+        <input name="symbol" type="text" [(ngModel)]="symbolInput">
+        <button (click)="getPrice()">Get price</button>
+        {{ symbolPrice }}
+    </div>
+    <div>
+        <label for="amount">Amount:&nbsp;</label>
+        <input name="amount" type="number" [(ngModel)]="amountInput">
+    </div>
+    <div>
+        <button (click)="transaction('buy')">Buy</button>
+        <button (click)="transaction('sell')">Sell</button>
+        <button (click)="clearFields()">Clear</button>
+    </div>
+</div>

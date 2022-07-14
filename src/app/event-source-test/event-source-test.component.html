@@ -1,0 +1,18 @@
+<h2>Event Sourcing Test</h2>
+<div>
+    <div>
+        <label>Symbol</label>
+        <input type="text" [(ngModel)]="setSymbolName" />
+        <label>Set symbol value:</label>
+        <input type="number" [(ngModel)]="setSymbolInput" />
+        <button (click)="setSymbol()">Set Symbol Value</button>
+    </div>
+    <div>
+        <label>Rebuild symbol:</label>
+        <input [(ngModel)]="rebuildInput" />
+        <button (click)="rebuildSymbol()">Rebuild</button>
+    </div>
+    <div>
+        <button (click)="clear()">Clear test fields</button>
+    </div>
+</div>

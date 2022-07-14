@@ -1,0 +1,20 @@
+<div *ngIf="isLoading; else loaded">
+    Loading... Please wait...
+</div>
+
+<ng-template #loaded>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Value</th>
+        </tr>
+        <tr *ngFor="let r of tableData">
+            <td>{{ r.symbol }}</td>
+            <td>{{ r.amount }}</td>
+            <td>{{ symbols[r.symbol] ? '$' + symbols[r.symbol] : 'Loading' }}</td>
+            <td>${{ (r.amount * symbols[r.symbol]).toFixed(2) }}</td>
+        </tr>
+    </table>
+</ng-template>
