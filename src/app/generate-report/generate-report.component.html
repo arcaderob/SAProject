@@ -2,4 +2,8 @@
     <label>Report symbol</label>
     <input type="text" [(ngModel)]="reportSymbol" />
     <button (click)="generateReport()">Generate Report</button>
+    <div [innerHtml]="tableHtml"></div>
+    <div ng-if="hasReportData">
+        <button (click)="saveReport()">Save Report</button>
+    </div>
 </div>

@@ -1,0 +1,16 @@
+<div>
+    <div>
+        <label>List of notificaions:</label>
+        <span [innerHtml]="listNotifications"></span>
+        <br>
+    </div>
+    <label>Symbol:</label>
+    <input type="text" [(ngModel)]="notificationSymbol" />
+    <input type="radio" name="higherLower" value="Higher" [(ngModel)]="higherLower">
+    <label for="higher">Higher</label>
+    <input type="radio" name="higherLower" value="Lower" [(ngModel)]="higherLower">
+    <label for="lower">Lower</label><br>
+    <label>Amount:</label><input type="number" [(ngModel)]="notificationAmount">
+    <button (click)="addNotification()">Add notification</button>
+    <button (click)="clearNotifications()">Clear notifications</button>
+</div>

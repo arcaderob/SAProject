@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+// API KEY left here for development purposes
 const API_KEY = 'BUKWDD20O0HRIQAI';
 
 @Component({

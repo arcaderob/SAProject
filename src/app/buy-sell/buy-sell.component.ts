@@ -41,7 +41,7 @@ export class BuySellComponent implements OnInit {
     this.http.post(
       `//localhost:3080/api/symbol`,
       {
-        "action": "buy",
+        "action": action,
         "symbol": this.symbolInput.toUpperCase(),
         "amount": this.amountInput,
         "price": parseFloat(this.symbolPrice.replace('$', '')).toFixed(2)

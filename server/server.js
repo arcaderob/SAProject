@@ -135,6 +135,7 @@ app.post('/api/rebuild', (req, res) => {
 });
 
 app.post('/api/setValue', (req, res) => {
+    console.log('updateing it with this', `UPDATE projections SET amount=${req.body.amount} WHERE symbol='${req.body.symbol}'`);
     connection.query(
         `UPDATE projections SET amount=${req.body.amount} WHERE symbol='${req.body.symbol}'`,
         (err, result) => {

@@ -9,6 +9,7 @@ import { StockDisplayComponent } from './stock-display/stock-display.component';
 import { BuySellComponent } from './buy-sell/buy-sell.component';
 import { EventSourceTestComponent } from './event-source-test/event-source-test.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -16,15 +17,17 @@ import { GenerateReportComponent } from './generate-report/generate-report.compo
     StockDisplayComponent,
     BuySellComponent,
     EventSourceTestComponent,
-    GenerateReportComponent
+    GenerateReportComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+1
