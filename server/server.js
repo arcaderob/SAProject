@@ -6,7 +6,8 @@ const app = express(),
       port = 3080;
 app.use(cors());
 
-// DB data for testing only
+// Database connection data (stored in local file for testing only. Normally,
+// this data would be stored in env vars in the Docker container or other.)
 const databaseSettings = {
     host: 'sql5.freemysqlhosting.net',
     user: 'sql5504775',
@@ -15,6 +16,7 @@ const databaseSettings = {
     port: 3306
 };
 
+// Connection data
 const connection = mysql.createConnection({
     host: databaseSettings.host,
     user: databaseSettings.user,
@@ -22,11 +24,21 @@ const connection = mysql.createConnection({
     password: databaseSettings.password
 });
 
+// Establish connection to DB
 connection.connect((err) => {
     if (err) return res.json({error: true, error: err});
     console.log('Successfully connected to DB');
 });
 
+// Listen on port
+app.listen(port, () => {
+    console.log(`Server listening on the port::${port}`);
+});
+
+// Use JSON body parser for incomming data
+app.use(bodyParser.json());
+
+// Function that inserts the events into the DB and updates the projection
 const performAction = (res, body) => {
     const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     connection.query(
@@ -44,6 +56,7 @@ const performAction = (res, body) => {
     );
 };
 
+// Function that updates the projection
 const updateProjection = (con, body) => {
     con.query(
         `SELECT * from projections WHERE symbol='${body.symbol}';`,
@@ -57,7 +70,7 @@ const updateProjection = (con, body) => {
             `INSERT into projections VALUES (${Date.now()}, '${body.symbol}', ${body.amount});`
             con.query(
                 sql,
-                (innerErr, innerResult) => {
+                (innerErr) => {
                     if (innerErr) throw innerErr;
                     console.log(`Projection ${hasResult ? 'updated' : 'inserted'}`);
                 }
@@ -65,6 +78,7 @@ const updateProjection = (con, body) => {
         });
 };
 
+// Function that retrieves events and rebuilds a specific perjection
 const rebuildProjection = (res, symbol) => {
     connection.query(
         `SELECT * FROM symbols WHERE symbol='${symbol}' ORDER BY timestamp ASC;`,
@@ -89,12 +103,7 @@ const rebuildProjection = (res, symbol) => {
     );
 };
 
-app.listen(port, () => {
-    console.log(`Server listening on the port::${port}`);
-});
-
-app.use(bodyParser.json());
-
+// Endpoint to obtain all the built projections
 app.get('/api/all', (req, res) => {
     connection.query(
         `SELECT * FROM projections;`,
@@ -105,6 +114,7 @@ app.get('/api/all', (req, res) => {
     );
 });
 
+// Endpoint to obtain the report on a specific symbol
 app.get('/api/report', (req, res) => {
     connection.query(
         `SELECT * FROM symbols where symbol='${req.query.symbol}' ORDER BY timestamp ASC;`,
@@ -115,6 +125,7 @@ app.get('/api/report', (req, res) => {
     );
 });
 
+// Endpoint to obtain the data on a specific symbol
 app.get('/api/symbol', (req, res) => {
     connection.query(
         `SELECT * FROM projections WHERE symbol='${req.query.symbol}';`,
@@ -126,14 +137,17 @@ app.get('/api/symbol', (req, res) => {
     );
 });
 
+// Endpoint to call the funciton that performs a buy or sell event
 app.post('/api/symbol', (req, res) => {
     performAction(res, req.body);
 });
 
+// Endpoint to rebuild the projections
 app.post('/api/rebuild', (req, res) => {
     rebuildProjection(res, req.body.symbol)
 });
 
+// Endpoint to set the value of a projections for testing purposes (so you can rebuild it)
 app.post('/api/setValue', (req, res) => {
     console.log('updateing it with this', `UPDATE projections SET amount=${req.body.amount} WHERE symbol='${req.body.symbol}'`);
     connection.query(
@@ -143,8 +157,4 @@ app.post('/api/setValue', (req, res) => {
             res.json({success: true, message: `${req.body.symbol} set to ${req.body.amount}`});
         }
     );
-});
-
-app.get('/', (req,res) => {
-    res.send('All Your Base Are Belong To Us');
 });

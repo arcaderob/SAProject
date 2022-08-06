@@ -20,8 +20,7 @@ export class GenerateReportComponent implements OnInit {
     this.hasReportData = false;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   insertDataIntoTable(data: any[]) {
     this.tableHtml = '<table><thead><tr><th>Symbol</th><th>Action</th><th>Amount</th><th>Price</th></tr></thead>';

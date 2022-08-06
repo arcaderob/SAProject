@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-const API_KEY = 'BUKWDD20O0HRIQAI';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-notification',
@@ -51,7 +51,7 @@ export class NotificationComponent implements OnInit {
   }
 
   getSymbolData(symbol: string) {
-    return this.http.get(`//www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`);
+    return this.http.get(`//www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${environment.API_KEY}`);
   }
 
   buildNotifications(data: any) {

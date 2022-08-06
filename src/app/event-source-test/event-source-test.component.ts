@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-const API_KEY = 'BUKWDD20O0HRIQAI';
-
 @Component({
   selector: 'app-event-source-test',
   templateUrl: './event-source-test.component.html',
